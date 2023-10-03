@@ -57,8 +57,6 @@ final class ClientFactory
      */
     public static function create(array $config = [])
     {
-        self::validateConfig($config);
-
         return new S3Client(self::createConfigArray($config));
     }
 
@@ -79,42 +77,6 @@ final class ClientFactory
         }
 
         return $config;
-    }
-
-    /**
-     * @param array $config
-     */
-    private static function validateConfig(array $config)
-    {
-        $allowedKeys = [
-            'api_provider',
-            'credentials',
-            'debug',
-            'endpoint',
-            'endpoint_provider',
-            'endpoint_discovery',
-            'handler',
-            'http',
-            'http_handler',
-            'iam',
-            'profile',
-            'region',
-            'retries',
-            'scheme',
-            'service',
-            'signature_provider',
-            'signature_version',
-            'stats',
-            'ua_append',
-            'validate',
-            'version',
-        ];
-        
-        foreach (array_keys($config) as $key) {
-            if (!in_array($key, $allowedKeys)) {
-                throw new \InvalidArgumentException(sprintf('%s is not an allowed key', $key));
-            }
-        }
     }
 
     /**
